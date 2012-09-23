@@ -1,0 +1,34 @@
+diff --git a/unlock_indicator.c b/unlock_indicator.c.new
+index a0decb4..8d8cd96 100644
+--- a/unlock_indicator.c
++++ b/unlock_indicator.c.new
+@@ -94,8 +94,27 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
+ 
+     if (img) {
+         if (!tile) {
+-            cairo_set_source_surface(xcb_ctx, img, 0, 0);
+-            cairo_paint(xcb_ctx);
++            int iw = cairo_image_surface_get_width(img);
++            int ih = cairo_image_surface_get_height(img);
++            if (xr_screens > 0) {
++                /* Composite the unlock indicator in the middle of each screen. */
++                for (int screen = 0; screen < xr_screens; screen++) {
++                    int w = xr_resolutions[screen].width;
++                    int h = xr_resolutions[screen].height;
++                    cairo_set_source_surface(xcb_ctx, img,
++                            xr_resolutions[screen].x + ((w - iw) >> 1),
++                            xr_resolutions[screen].y + ((h - ih) >> 1));
++                    cairo_paint(xcb_ctx);
++                }
++            } else {
++                /* We have no information about the screen sizes/positions, so we just
++                 * place the unlock indicator in the middle of the X root window and
++                 * hope for the best. */
++                int w = last_resolution[0];
++                int h = last_resolution[1];
++                cairo_set_source_surface(xcb_ctx, img, (w - iw) >> 1, (h - ih) >> 1);
++                cairo_paint(xcb_ctx);
++            }
+         } else {
+             /* create a pattern and fill a rectangle as big as the screen */
+             cairo_pattern_t *pattern;
