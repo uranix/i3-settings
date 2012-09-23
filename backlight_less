@@ -1,0 +1,8 @@
+#!/bin/bash
+
+LEVEL=$(cat /sys/class/backlight/samsung/actual_brightness)
+LEVEL_MAX=$(cat /sys/class/backlight/samsung/max_brightness)
+
+if [ $LEVEL -gt 0 ]; then
+	echo $LEVEL - 1 | bc | sudo /usr/bin/tee /sys/class/backlight/samsung/brightness > /dev/null
+fi
