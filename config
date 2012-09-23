@@ -220,5 +220,5 @@ bindsym XF86AudioRaiseVolume exec amixer -q set Master 5+
 bindsym XF86AudioLowerVolume exec amixer -q set Master 5-
 bindsym XF86AudioMute exec amixer -q sset Master toggle
 
-bindcode 232 exec $dir/backlight_off
-bindcode 233 exec $dir/backlight_on
+bindcode 232 exec $dir/backlight_less
+bindcode 233 exec $dir/backlight_more
