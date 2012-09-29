@@ -203,12 +203,8 @@ assign [class="Mplayer"] 10: video
 exec i3-sensible-terminal
 # Daemons
 exec --no-startup-id dropbox start
-exec --no-startup-id thunar --daemon
 exec /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id nm-applet
-# exec --no-startup-id xfce4-power-manager
-# Let it fire daemons
-exec --no-startup-id samsung-tools -a 
 # Mailer !!!
 exec icedove
 # Junk
@@ -220,5 +216,11 @@ bindsym XF86AudioRaiseVolume exec amixer -q set Master 5+
 bindsym XF86AudioLowerVolume exec amixer -q set Master 5-
 bindsym XF86AudioMute exec amixer -q sset Master toggle
 
-bindcode 232 exec $dir/backlight_less
-bindcode 233 exec $dir/backlight_more
+bindsym XF86MonBrightnessDown exec $dir/backlight_less
+bindsym XF86MonBrightnessUp   exec $dir/backlight_more
+
+bindsym XF86Launch1 exec samsung-tools --show-notify --quiet --backlight hotkey
+bindsym XF86Launch2 exec samsung-tools --show-notify --quiet --bluetooth hotkey
+bindsym XF86Launch3 exec samsung-tools --show-notify --quiet --cpu hotkey
+bindsym XF86Display exec samsung-tools --show-notify --quiet --webcam hotkey
+bindsym XF86WLAN exec samsung-tools --show-notify --quiet --wireless hotkey
