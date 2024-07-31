@@ -1,15 +1,19 @@
-#!/usr/bin/env python
-# vim: et ts=4 sts=4 tw=4
+#!/usr/bin/env python3
+#for systems without systemd
+#please install policykit to provide org.freedesktop.PolicyKit on AntiX
+#updated for gtk3
 # based on cb-exit used in CrunchBang Linux <http://crunchbanglinux.org/>
+# modified by uranix 2012
+# modified by DavDev aka ubuntupunk 2024
 
-import pygtk
-pygtk.require('2.0')
-import gtk
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
 import os
 import getpass
 import time
 
-prefix = '$HOME/.i3/'
+prefix = '$HOME/.config/i3/scripts'
 
 class i3_exit:
 
@@ -81,7 +85,8 @@ class i3_exit:
         self.window.stick()
         self.window.set_position(1)
         self.window.connect("delete_event", gtk.main_quit)
-        windowicon = self.window.render_icon(gtk.STOCK_QUIT, gtk.ICON_SIZE_MENU)
+        icon = Gtk.Image.new_from_stock(Gtk.STOCK_QUIT, Gtk.IconSize.MENU)
+        windowicon = icon.get_pixbuf()
         self.window.set_icon(windowicon)
 
         
